@@ -18,25 +18,17 @@ let maincopy = main
 let arr = maincopy.sort((a, b)=>{return a[1].localeCompare(b[1])})
 // console.log(arr)
 // console.log(data)
+// let a = [0,1,2,3,'home@gmail.com']
 
-function quicksort(array) {
-   if (array.length <= 1) {
-     return array;
-   }
-   // console.log(array[0])
-   var pivot = array[0][1];
-   
-   var left = []; 
-   var right = [];
- 
-   for (var i = 1; i < array.length; i++) {
-     array[i][1] < pivot ? left.push(array[i]) : right.push(array[i]);
-   }
- 
-   return quicksort(left).concat(pivot, quicksort(right));
- };
- 
- var unsorted = [23, 45, 16, 37, 3, 99, 22];
+// if ( a[4].split('@')[1].includes('gmail')){
+//    console.log(1)
+// }
+
+let mainw = [1,2,4]
+for (let a in mainw){
+   console.log(a)
+}
+
 //  var sorted = quicksort(unsorted);
 //  console.log(quicksort(main))
 
@@ -48,18 +40,18 @@ function quicksort(array) {
 // select single one
 // console.log(main[3-1])
 
-const some = {
-   name: 'here',
-   car: 'some'
-}
+// const some = {
+//    name: 'here',
+//    car: 'some'
+// }
 
-// read and write
+// // read and write
 
-console.log(JSON.stringify(Object.values(some)))
-let name = JSON.stringify(Object.values(some))
-let so = '\n'+(name.length+1)+','+name.slice(1,name.length-1)
+// console.log(JSON.stringify(Object.values(some)))
+// let name = JSON.stringify(Object.values(some))
+// let so = '\n'+(name.length+1)+','+name.slice(1,name.length-1)
 
-fs.appendFile("./employees.txt", so, (err) => {
-   if (err) console.log(err);
-   console.log("Successfully Written to File.");
- });
+// fs.appendFile("./employees.txt", so, (err) => {
+//    if (err) console.log(err);
+//    console.log("Successfully Written to File.");
+//  });

@@ -2,5 +2,8 @@ html
     head 
         title=title 
     body 
-        style(text= 'center') 
-            message= message 
+        h1= message 
+        br
+        div 
+            form(action="/api/all", method='GET')
+                input(type="submit", value="Employees")
