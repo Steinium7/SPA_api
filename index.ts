@@ -9,7 +9,6 @@ app.set('view engine', 'pug')
 app.set('views','./views')
 
 app.use('/api',employees)
-// app.use('/', home)
 
 let port  = process.env.PORT || 3000
 app.listen(port, ()=>{console.log(`Listening on Port ${port}`)})

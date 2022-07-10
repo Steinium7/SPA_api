@@ -2,10 +2,6 @@ html
     head 
         title=title 
     body
-        br
-        form(action="/api/create", method='GET')
-            input(type="submit", value="Create Employee")
-        br
 
         form(action="/api/sort/1", method='POST')
             input#response(type='radio' name='response' value=1)
@@ -16,12 +12,6 @@ html
             label(for='response')  None  
             input(type="submit", value="Sort")
 
-    
-        label(for="filter") Email Domian:
-        br
-        form(action="/api/filter", method='POST')  
-            input#lname(type="text", name="filter" required)
-            input(type="submit", value="Filter")
         br
         each i in message 
             a(href='/api/employee/'+ i[0])
@@ -30,9 +20,9 @@ html
             br
         br
 
-        if paginate != 0
-            each i in paginate 
-                a(href='/api/all/'+ i)
-                    span= '    '+i+' '
+        
+        each i in paginate 
+            a(href='/api/sort/'+ i)
+                span= '    '+i+' '
 
         
