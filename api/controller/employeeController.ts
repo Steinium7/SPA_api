@@ -1,79 +1,48 @@
-const employeeModel = require('../model/employeeModel')
+const employeeModel = require('../model/employeeModel');
 
 module.exports = {
+    getAll: (req: any, res: any) => {
+        let data = employeeModel.getEmployees('all');
+        if (data instanceof Error)
+            res.send({ err: 'There is an Error' });
 
-    getAll:  (req: any, res: any)=>{
-    
-            // Rewrite section ---------------
-        
-        let data = employeeModel.getEmployees()
-    
-        let main:string[] = data.map(function (entry:string){
-            return entry.split(',').slice(0,3)
-        })
-
-        res.send
+        res.send(data);
     },
-    
-    getOne: (req: any, res: any)=>{
 
+    getOne: (req: any, res: any) => {
         // Rewrite section ------------------
-        let data = employeeModel.getEmployees()
 
-        let main:string[] = data.map(function (entry:string){
-            return entry.split(',')
-        })
-         
-        // res.render('employee', {title:"SPA", message:main[req.params.id-1]})
+        let data = employeeModel.getEmployees('one', req.params.id);
+        if (data instanceof Error)
+        res.send({ err: 'There is an Error' });
+
+        res.send(data)
+
     },
 
-    createEmployee: (req: any, res: any) =>{
+    createEmployee: (req: any, res: any) => {
+        let food = employeeModel.getEmployees();
 
-        try {
-           var food = fs.readFileSync('./employees.txt', 'utf8');
-           food = food.split('\n')
-        } catch (err) {
-            console.error(err);
-        }
-     
-        let data = req.body
-        console.log(data)
-        data = Object.values(data)
-        data = data.map(function (a:string) {
-            return a.replace('"','')
-        })
-    
-        let entry =`\n${(food.length+1)},${data}`
-        console.log(entry)
+        console.log(entry);
 
-    // Rewrite section ----------
-        fs.appendFile("./employees.txt", entry, (err:any) => {
-           if (err) console.log(err);
-           console.log("Successfully Written to File.");
-        });
-    
+        // Rewrite section ----------
+
+
         // res.render('info',{title: "SPA", message:"Successfully Written to File."})
     },
 
-    filter: (req:any, res:any)=>{
-
+    filter: (req: any, res: any) => {
         // rewrite section -----
-        let searchWord = req.body.filter
-        
-        let data = employeeModel.getEmployees()
+        let searchWord = req.body.filter;
 
-        let main:string[] = data.map(function (entry:string){
-            return entry.split(',')
-        })
-    
-        let filterValues:string[] = []
-    
-        main.forEach(function (a) {
-            console.log(a[5].split('@'))
-            if (a[5].split('@')[1].includes(searchWord))
-                filterValues.push(a)
-        })
+        let data = employeeModel.getEmployees();
+
+        let main: string[] = data.map(function (entry: string) {
+            return entry.split(',');
+        });
+
+
         // res.render('index', {title:"The Express App", message:filterValues,
         //     paginate:0})
-    }
-}
+    },
+};
