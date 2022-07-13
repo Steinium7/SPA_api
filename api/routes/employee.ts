@@ -2,6 +2,8 @@ let express = require('express')
 const employeeController = require('../controller/employeeController')
 const router = express.Router()
 
+// To send files to the backend
+router.post('/file',()=>{})
 
 router.get('/all', employeeController.getAll)
 
