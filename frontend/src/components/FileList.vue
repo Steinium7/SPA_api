@@ -1,34 +1,49 @@
 <template>
     <div class="list">
-        <div v-for="name in names" :key="name.age" class="name">{{name.name}}</div>
+        <div v-for="name in main" :key="name" class="name">
+            <a href= @directedLink(name[0])> {{ name[1] }}, {{ name[2] }} </a>
+        </div>
     </div>
 </template>
 
 <script>
+import { getAllEmployees } from '@/services/EmployeeService';
 export default {
-    data (){
-        return{
-        names:[{name:'dkfjd',age:12},{name:'eirero',age:34},{name:'eirero',age:34},{name:'eirero',age:34},{name:'eirero',age:34}],
+    data() {
+        return {
+            main: [],
+        };
+    },
+    methods: {
+        // write any function you want to use over here
+        async modifyData() {
+            // let data = getAllEmployees();
+            const res = await fetch('http://localhost:3000/api/all');
+            let data = await res.json();
+            this.main = Object.values(data);
+            // console.log(data)
+        },
+
+        directedLink(id){
+            return "http://localhost:3000/api/" + id
         }
     },
-    methods:{
-        // write any function you want to use over here
-    },
-    mounted(){
+    created() {
         // do your fetch request here and store the data in the data like ive done
-    }
-}
+        this.modifyData();
+    },
+};
 </script>
 
 <style>
-.list{
+.list {
     width: 70%;
     border: 1px solid #ccc;
     padding: 15px;
     padding-bottom: 0;
     margin: 20px auto;
 }
-.name{
+.name {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -36,5 +51,4 @@ export default {
     border-bottom: 1px solid #ccc;
     padding: 8px;
 }
-
 </style>
