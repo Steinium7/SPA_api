@@ -1,15 +1,29 @@
 const fs = require('fs');
 
 function readFile() {
-    let data = fs.readFileSync('../employees.txt', 'utf8');
+    let data = fs.readFileSync('./employees.txt', 'utf8');
     return data.split('\n');
+}
+
+function formatData(data: string[]) {
+    interface IObjectKeys {
+        [key: string]: string[];
+    }
+    let main: IObjectKeys = {};
+
+    for (let entry of data) {
+        let employee = entry.split(',');
+        main[employee[0]] = employee.slice(1, 3);
+        main[employee[0]].push(employee[5]);
+    }
+
+    return main;
 }
 
 module.exports = {
     getEmployees: (option: 'all' | 'one' | 'filter', parameter: string) => {
         try {
-
-            let data = readFile()
+            let data = readFile();
             interface IObjectKeys {
                 [key: string]: string[];
             }
@@ -17,23 +31,20 @@ module.exports = {
             let main: IObjectKeys = {};
 
             if (option == 'all') {
-                for (let entry of data) {
-                    let employee = entry.split(',');
-                    main[employee[0]] = employee.slice(1, 3);
-                    main[employee[0]].push(employee[5]);
-                }
+                main = formatData(data);
             } else if (option == 'one') {
                 let employee = data[parseInt(parameter) - 1].split(',');
                 main[employee[0]] = employee.slice(1);
             } else {
-                let filterValues: string[][] = [];
+                let filterValues: string[] = [];
 
                 data.forEach(function (a: string) {
-                    // console.log(a[5].split('@'));
                     let splitData: string[] = a.split(',');
                     if (splitData[5].split('@')[1].includes(parameter))
-                        filterValues.push(splitData);
+                        filterValues.push(a);
                 });
+
+                main = formatData(filterValues);
             }
             return main;
         } catch (err) {
@@ -43,8 +54,7 @@ module.exports = {
     },
 
     createEmployee: (data: Object) => {
-        // console.log(data);
-        let number = readFile().length
+        let number = readFile().length;
 
         let dataNew = Object.values(data);
         data = dataNew.map(function (a: string) {
@@ -54,8 +64,8 @@ module.exports = {
         let entry = `\n${number + 1},${data}`;
 
         fs.appendFile('./employees.txt', entry, (err: any) => {
-            if (err) console.log(err);
-            console.log('Successfully Written to File.');
+            if (err) return 0;
+            return 1;
         });
     },
 };
