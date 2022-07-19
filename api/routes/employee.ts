@@ -1,23 +1,14 @@
 let express = require('express');
 const employeeController = require('../controller/employeeController');
-const multer = require('multer');
+const employeeFileUpload = require('../middleware/employeeFileUpload');
+
 const router = express.Router();
 
-// To send files to the backend
-
-var storage = multer.diskStorage({
-    destination: function (req: any, file: any, cb: any) {
-        cb(null, './uploads');
-    },
-    filename: function (req: any, file: any, cb: any) {
-        cb(null, 'employees.txt');
-    },
-});
-var upload = multer({ storage: storage });
-
-router.post('/upload', upload.single('file'), (req: any, res: any) => {
-    res.json({ file: req.file });
-});
+router.post(
+    '/upload',
+    employeeFileUpload.upload().single('file'),
+    employeeController.fileUpload
+);
 
 router.get('/all', employeeController.getAll);
 

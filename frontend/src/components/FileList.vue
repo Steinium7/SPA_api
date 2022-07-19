@@ -1,13 +1,19 @@
 <template>
     <div class="list">
-        <div v-for="name in main" :key="name" class="name">
-            <a href= @directedLink(name[0])> {{ name[1] }}, {{ name[2] }} </a>
-        </div>
+        <Employee
+            v-for="name in main"
+            :key="name"
+            :id="name[0]"
+            :first="name[1]"
+            :last="name[2]"
+            class="name"
+        ></Employee>
     </div>
 </template>
 
 <script>
 import { getAllEmployees } from '@/services/EmployeeService';
+import Employee from './Employee.vue';
 export default {
     data() {
         return {
@@ -23,15 +29,15 @@ export default {
             this.main = Object.values(data);
             // console.log(data)
         },
-
-        directedLink(id){
-            return "http://localhost:3000/api/" + id
-        }
+        directedLink(id) {
+            return 'http://localhost:3000/api/' + id;
+        },
     },
     created() {
         // do your fetch request here and store the data in the data like ive done
         this.modifyData();
     },
+    components: { Employee },
 };
 </script>
 

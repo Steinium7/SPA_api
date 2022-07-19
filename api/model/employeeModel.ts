@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 function readFile() {
-    let data = fs.readFileSync('./employees.txt', 'utf8');
+    let data = fs.readFileSync('./uploads/employees.txt', 'utf8');
     return data.split('\n');
 }
 
@@ -13,7 +13,7 @@ function formatData(data: string[]) {
 
     for (let entry of data) {
         let employee = entry.split(',');
-        main[employee[0]] = employee.slice(1, 3);
+        main[employee[0]] = employee.slice(0, 3);
         main[employee[0]].push(employee[5]);
     }
 
@@ -34,7 +34,7 @@ module.exports = {
                 main = formatData(data);
             } else if (option == 'one') {
                 let employee = data[parseInt(parameter) - 1].split(',');
-                main[employee[0]] = employee.slice(1);
+                main[employee[0]] = employee//.slice(1);
             } else {
                 let filterValues: string[] = [];
 
@@ -63,7 +63,7 @@ module.exports = {
 
         let entry = `\n${number + 1},${data}`;
 
-        fs.appendFile('./employees.txt', entry, (err: any) => {
+        fs.appendFile('.uploads/employees.txt', entry, (err: any) => {
             if (err) return 0;
             return 1;
         });

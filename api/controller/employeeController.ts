@@ -30,4 +30,9 @@ module.exports = {
 
         res.send(data);
     },
+
+    fileUpload: (req: any, res: any) => {
+        console.log(req.body)
+        res.json({ file: req.file });
+    },
 };
